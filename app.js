@@ -1,10 +1,10 @@
 const express = require ('express')
 const app = express()
 const bodyParser = require('body-parser');
-
+app.use(bodyParser.json());
 require("./routehandles")(app)
 
-app.use(bodyParser.urlencoded());
+ 
 
 app.get('/', (req,res) => {
     console.log("server is running")

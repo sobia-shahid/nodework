@@ -1,38 +1,54 @@
-const checkout = require("2checkout-node")
-const http = require('http');
+//const checkout = require("2checkout-node")
+const tco = require('tco-node-api')
+//const http = require('http');
 
 
 exports.bill = async (req, res) => {
     console.log("bill is ready")
-    const tco = new checkout({
+    console.log(req.body)
+    tco.config({
         sellerId :"sandbox-seller-id",
         privateKey : "sandbox-private-key",
         //sandbox: true   
     })
 
+    
     const params = {
-        "merchantOrderId": "123",
-        "token": req.body.token,
-        "currency": "USD",
-        "total": "10.00",
-        "billingAddr": {
-            "name": "Testing Tester",
-            "addrLine1": "123 Test St",
-            "city": "Columbus",
-            "state": "Ohio",
-            "zipCode": "43123",
-            "country": "USA",
-            "email": "example@2co.com",
-            "phoneNumber": "5555555555"
-        } ,
-        "demo":true
-    };
+            amount: 1.00,
+            merchant_order_id: '123',
+            auth_only: true,
+            customer: {
+              payment_method: {
+                credit_card: {
+                  number: req.body.card_number,
+                  exp_month: req.body.expiry_month,
+                  exp_year:  req.body.expiry_year,
+                  cvv: req.body.cvv_code
+                  },
+                address: {
+                  name: 'Testing Tester',
+                  address_1: '123 Test St',
+                  address_2: 'the attic',
+                  city: 'Columbus',
+                  state: 'OH',
+                  country_code: 'US',
+                  postal_code: '43123'
+                }
+              }
+            },
+            demo : true,
+            recurrence: '1 Month',
+            duration: 'Forever'
 
-    tco.checkout.authorize(params,  (error, data) => {
+          };
+
+    tco.sales.create(params, function (error, sale) {
+        
         if (error) {
-            res.send(error.message);
+            res.status(400).send(error.message);
         } else {
-            res.send(data.res.responseMsg);
-        }
-    });
+            console.log(sale.id);  //sale_id
+             
+        } 
+      });
 }

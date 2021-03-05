@@ -55,12 +55,12 @@ exports.bill = async (req, res) => {
 
 
 //email
-exports.mail =  (res,req) => {
+exports.mail =  async(req,res) => {
     let mailTransporter = nodemailer.createTransport({ 
         service: 'gmail', 
         auth: { 
             user: 'shahidsobia197@gmail.com', //your email
-            pass: ' ' //password
+            pass: '  ' //password
         }
        
       
@@ -73,13 +73,14 @@ exports.mail =  (res,req) => {
         text: 'Thanks for your subscription'
     }; 
       
-    mailTransporter.sendMail(mailDetails, function(err, data) { 
+    mailTransporter.sendMail(mailDetails, (err, info) => { 
         if(err) { 
             console.log(err); 
         } 
         else { 
-            res.status(200).send(data)
-            console.log(data); 
+            
+            console.log(info); 
+            res.json(info.response)
         } 
     }); 
 

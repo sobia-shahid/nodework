@@ -1,5 +1,8 @@
 const express = require ('express')
 const app = express()
+
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1';
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 require("./routehandles")(app)

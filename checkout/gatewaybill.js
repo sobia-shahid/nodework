@@ -1,7 +1,7 @@
 //const checkout = require("2checkout-node")
 const tco = require('tco-node-api')
 //const http = require('http');
-
+const nodemailer = require('nodemailer')
 
 exports.bill = async (req, res) => {
     console.log("bill is ready")
@@ -51,4 +51,36 @@ exports.bill = async (req, res) => {
              
         } 
       });
+}
+
+
+//email
+exports.mail =  (res,req) => {
+    let mailTransporter = nodemailer.createTransport({ 
+        service: 'gmail', 
+        auth: { 
+            user: 'shahidsobia197@gmail.com', //your email
+            pass: ' ' //password
+        }
+       
+      
+    }); 
+      
+    let mailDetails = { 
+        from: 'shahidsobia197@gmail.com', 
+        to: 'shahidsobia197@gmail.com', 
+        subject: 'Test mail', 
+        text: 'Thanks for your subscription'
+    }; 
+      
+    mailTransporter.sendMail(mailDetails, function(err, data) { 
+        if(err) { 
+            console.log(err); 
+        } 
+        else { 
+            res.status(200).send(data)
+            console.log(data); 
+        } 
+    }); 
+
 }

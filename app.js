@@ -1,7 +1,9 @@
 const express = require ('express')
 const app = express()
 
+require("dotenv").config() 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1';
+ 
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());

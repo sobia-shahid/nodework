@@ -59,16 +59,16 @@ exports.mail =  async(req,res) => {
     let mailTransporter = nodemailer.createTransport({ 
         service: 'gmail', 
         auth: { 
-            user: 'shahidsobia197@gmail.com', //your email
-            pass: '  ' //password
+            user: 'nodet245@gmail.com', //your email
+            pass: '123/123node' //password
         }
        
       
     }); 
       
     let mailDetails = { 
-        from: 'shahidsobia197@gmail.com', 
-        to: 'shahidsobia197@gmail.com', 
+        from: 'nodet245@gmail.com', 
+        to: 'nodet245@gmail.com', 
         subject: 'Test mail', 
         text: 'Thanks for your subscription'
     }; 
